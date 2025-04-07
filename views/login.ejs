@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="login-box">
+        <h2>Login</h2>
+        <% if (typeof errors !== 'undefined') { %>
+            <div class="error-container">
+                <% if (errors.email) { %>
+                    <div class="error-message"><%= errors.email.msg %></div>
+                <% } %>
+                <% if (errors.password) { %>
+                    <div class="error-message"><%= errors.password.msg %></div>
+                <% } %>
+                <% if (errors.auth) { %>
+                    <div class="error-message"><%= errors.auth.msg %></div>
+                <% } %>
+            </div>
+        <% } %>
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
