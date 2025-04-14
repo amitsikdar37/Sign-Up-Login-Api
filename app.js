@@ -26,11 +26,6 @@ app.use(signUpRouter);
 app.use(loginRouter);
 
 const PORT = 3001;
-/*mongoConnect(() => {
-    app.listen(PORT, () => {
-        console.log(`Server Is Running On Port: http://localhost:${PORT}`);
-    });
-})*/
 mongoose.connect("mongodb+srv://sikdara477:omikun@cluster0.qyjcazl.mongodb.net/voters", {
     useNewUrlParser: true,
     useUnifiedTopology: true
