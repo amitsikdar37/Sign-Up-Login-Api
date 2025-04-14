@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const Voters = require('../models/voters.js');
+const Voters = require('../models/mongoose-models'); // Adjust the path as necessary
 const { check, validationResult } = require('express-validator');
 
 exports.getSignUpPage = (req, res) => {
@@ -66,7 +66,7 @@ exports.handleSignUp = [
       }
       
       const hashedPassword = await bcrypt.hash(password, 12);
-      const voter = new Voters({
+      const voter = new Voters({  // Changed from Voter to Voters to match the imported model
         firstname,
         lastname,
         email,
@@ -74,9 +74,9 @@ exports.handleSignUp = [
         role
       });
       
-      await voter.save();
-      console.log('Voter saved successfully!');
-      res.render('signup-success');
+      await voter.save();  // Using await instead of then/catch
+      console.log('Voter saved successfully:', voter);
+      return res.render('signup-success');  // Added return and removed duplicate render
       
     } catch (err) {
       console.error('Error saving voter:', err);

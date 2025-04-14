@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const Voters = require('../models/voters.js');
+const Voters = require('../models/mongoose-models'); // Adjust the path as necessary
 const { check, validationResult } = require('express-validator');
 
 
@@ -35,7 +35,7 @@ exports.postLogin = [
         
       });
     }
-    const user = await Voters.findByEmail(req.body.email);
+    const user = await Voters.findOne({ email: email }); // Changed this line to pass an object
     if (!user) {
       return res.render('login', {
         errors: { auth: { msg: 'Invalid email or password' } },
@@ -43,7 +43,7 @@ exports.postLogin = [
       });
     }
 
-    const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       return res.render('login', {
